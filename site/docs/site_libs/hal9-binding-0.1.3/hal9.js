@@ -4,27 +4,55 @@ HTMLWidgets.widget({
   factory: function(el, width, height) {
     el.parentElement.style.height = "100%";
     el.parentElement.style.maxHeight = "100%";
-    el.style.padding = '4px';
+    el.style.overflow = 'hidden';
 
     if (height === 0) el.style.height = '380px';
 
     return {
 
       renderValue: function(x) {
-        window.hal9 = {
-          pipeline: x.pipeline_json,
-          iframe: x.iframe,
-          id: 'hal9-root-' + Math.floor(Math.random() * 10000000)
-        };
+        const css = `
+          #output {
+            display: flex;
+            flex-direction: column;
+          }
+        `;
 
-        const id = x.environment != 'prod' ? window.hal9.id : 'app';
+        if (x.mode == 'default') {
+          x.mode = x.pipeline_json.steps.length > 0 ? 'run' : 'design';
+        }
 
-        const html = `<div id="${window.hal9.id}" style="height: 800px; max-height: 800px;"></div>`;
-        el.innerHTML = html;
+        const render = function() {
+          hal9.init({
+            iframe: true,
+            html: el,
+            api: x.library,
+            css: css,
+            editable: true,
+            mode: x.mode,
+            pipeline: x.pipeline_json
+          }, {}).then(function(hal9) {
+            if (hal9) {
+              hal9.load(x.pipeline_json).then(function(pid) {
+                hal9.run(pid, { html: 'output', shadow: false });
+              });
+            }
+          });
+        }
 
-        const script = document.createElement('script');
-        script.src = x.library;
-        document.body.appendChild(script);
+        if (typeof(hal9) == 'undefined') {
+          const script = document.createElement('script');
+          script.id = 'hal9-script';
+          script.src = x.library;
+          document.body.appendChild(script);
+
+          script.addEventListener('load', function() {
+            render()
+          });
+        }
+        else {
+          render();
+        }
       },
 
       resize: function(width, height) {

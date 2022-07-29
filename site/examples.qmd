@@ -20,7 +20,6 @@ knitr::opts_chunk$set(python.reticulate = FALSE)
 
 ```{r}
 library(hal9)
-
 h9_create() |>
   h9_load(mtcars) |>
   h9_bar_chart(x = "cyl",
@@ -41,20 +40,93 @@ h9_create() |>
 ```
 
 :::
-
-```{r eval=FALSE, include=FALSE}
-
+  
 ### Dot Plot
+  
+::: {.panel-tabset}
 
+## R
 
-
-### Candles
-
-
-
-### Heatmap
-
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_dot_chart(
+    x = "carb",
+    color = "cyl",
+    palette = "schemePaired",
+    dotsize = "3",
+    ticks = "3",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  )
 ```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::  
+  
+### Candles
+  
+::: {.panel-tabset}
+
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_error_chart(
+    x = "carb",
+    min = "mpg",
+    max = "mpg",
+    open = "vs",
+    close = "cyl",
+    levels = "carb",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::  
+  
+### Heatmap
+  
+::: {.panel-tabset}
+
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_heatmap_chart(
+    x = "mpg",
+    y = "disp",
+    value = "carb",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
 
 ### Histogram
 
@@ -79,69 +151,368 @@ h9_create() |>
 ```
 
 :::
-
-```{r eval=FALSE, include=FALSE}
+  
 
 ### Line
+  
+::: {.panel-tabset}
 
+## R
 
+```{r}
+tab_aux <- mtcars |> 
+  dplyr::group_by(carb) |> 
+  dplyr::summarise(media = mean(mpg))
 
+h9_create() |>
+  h9_load(tab_aux) |> 
+  h9_line_chart(
+    x = "carb",
+    y = "media",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::  
+  
 ### Sankey
 
+::: {.panel-tabset}
 
+## R
 
-### Scatter
-
-
-
-### Treemap
-
+```{r}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_sankey_chart(
+    source = "carb",
+    target = "cyl",
+    value = "carb",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  )
 ```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::    
+  
+### Scatter
+  
+::: {.panel-tabset}
+
+## R
+
+```{r}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_scatter_chart(
+    x = "mpg",
+    y = "drat",
+    color = "cyl",
+    size = "carb",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "40",
+    marginbottom = "30"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::  
+  
+### Treemap
+  
+::: {.panel-tabset}
+
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_treemap_chart(
+    label = "mpg",
+    size = "hp",
+    palette = "schemePaired",
+    fontsize = "16",
+    marginleft = "30",
+    marginbottom = "40"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::  
+
+
+
+
+## Visualizations
+  
+### Facets
+  
+::: {.panel-tabset}
+
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_facets_chart(
+    x = "mpg",
+    y = "hp",
+    facets = "carb",
+    color = "cyl",
+    chartType = "dot", 
+    palette = "schemePaired"
+  )
+  
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::  
+  
+### Funnel
+
+::: {.panel-tabset}
+
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_funnel_chart(
+    stage = "mpg",
+    value = "hp",
+    label = "cyl",
+    fontSize = "16",
+    showPercentSelection = "true",
+    funnelType = "2d",
+    palette = "schemePaired"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
 
 
 ```{r eval=FALSE, include=FALSE}
-
-## Visualizations
-
-### Facets
-
-
-
-### Funnel
-
-
-
 ### Map
-
+```
 
 
 ### Network
 
+::: {.panel-tabset}
 
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_network_chart(
+    from = "cyl",
+    to = "carb" 
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
 
 ### Plotly
 
+::: {.panel-tabset}
 
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_plotly_chart(
+    x = "mpg",
+    y = "hp",
+    chartType = "scatter", 
+    dataSizes = "5", 
+    palette = "schemePaired"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
 
 ### Radial
 
+::: {.panel-tabset}
 
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_radial_chart(
+    x = "mpg",
+    y = "hp",
+    wafflesizelabel = "250",
+    palette = "schemePaired"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
 
 ### Regression
 
+::: {.panel-tabset}
 
+## R
+
+```{r}
+tab_aux <- mtcars |> 
+  dplyr::group_by(carb) |> 
+  dplyr::summarise(media = mean(mpg))
+
+h9_create() |>
+  h9_load(tab_aux) |> 
+  h9_regression_chart(
+    x = "carb",
+    y = "media",
+    type = "exponential", 
+    predictions = "0"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
 
 ### Waffle
 
+::: {.panel-tabset}
 
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_waffle_chart(
+    x = "mpg",
+    y = "hp",
+    wafflesizelabel = "250", 
+    palette = "schemePaired"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
 
 ### Waterfall
 
+::: {.panel-tabset}
 
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_waterfall_chart(
+    x = "mpg",
+    y = "carb",
+    fontsize = "16", 
+    marginleft = "40", 
+    marginbottom = "30"
+  )
+```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
 
 ### Wordcloud
 
+::: {.panel-tabset}
+
+## R
+
+```{r, eval = FALSE}
+h9_create() |>
+  h9_load(mtcars) |> 
+  h9_wordcloud_chart(
+    label = "_row",
+    size = "cyl"
+  )
 ```
+
+## Python
+
+```{python, eval = FALSE}
+"soon"
+```
+
+:::
+
+
 
 
 ## Transforms
@@ -166,12 +537,12 @@ h9_create() |>
 ```
 
 :::
+  
 
 ```{r eval=FALSE, include=FALSE}
-
 ### Convert
-
 ```
+
 
 ### Derive
 
@@ -193,9 +564,9 @@ h9_create() |>
 ```
 
 :::
-
+  
 ### Drop
-
+  
 ::: {.panel-tabset}
 
 ## R
@@ -213,9 +584,9 @@ h9_create() |>
 ```
 
 :::
-
+  
 ### Filter
-
+  
 ::: {.panel-tabset}
 
 ## R
@@ -234,9 +605,9 @@ h9_create() |>
 ```
 
 :::
-
+  
 ### Fold
-
+  
 ::: {.panel-tabset}
 
 ## R
@@ -254,9 +625,9 @@ h9_create() |>
 ```
 
 :::
-
+  
 ### Impute
-
+  
 ::: {.panel-tabset}
 
 ## R
@@ -275,12 +646,12 @@ h9_create() |>
 ```
 
 :::
+  
 
 ```{r eval=FALSE, include=FALSE}
-
 ### Pivot
-
 ```
+
 
 ### Rolling Sum
 
@@ -301,9 +672,9 @@ h9_create() |>
 ```
 
 :::
-
+  
 ### Sample
-
+  
 ::: {.panel-tabset}
 
 ## R
@@ -322,9 +693,9 @@ h9_create() |>
 ```
 
 :::
-
+  
 ### Select
-
+  
 ::: {.panel-tabset}
 
 ## R
@@ -342,14 +713,14 @@ h9_create() |>
 ```
 
 :::
-
+  
 ### Slice
-
+  
 ::: {.panel-tabset}
 
 ## R
 
-```{r}
+```{r, eval = FALSE}
 h9_create() |>
   h9_load(mtcars) |>
   h9_slice(start = "5",
@@ -363,9 +734,9 @@ h9_create() |>
 ```
 
 :::
-
+  
 ### Sort
-
+  
 ::: {.panel-tabset}
 
 ## R
@@ -384,9 +755,9 @@ h9_create() |>
 ```
 
 :::
-
+  
 ### Summarize
-
+  
 ::: {.panel-tabset}
 
 ## R
@@ -406,15 +777,12 @@ h9_create() |>
 ```
 
 :::
-
-
+  
+  
 ```{r eval=FALSE, include=FALSE}
 ## R Markdown
-
 ## Publish
-
 ## Shiny
-
 ```
 
 
